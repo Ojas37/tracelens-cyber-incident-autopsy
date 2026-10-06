@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles } from 'lucide-react';
+import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles, Mic } from 'lucide-react';
 import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
 
@@ -9,6 +9,7 @@ interface IncidentNavPanelProps {
   selectedId: string;
   onSelect: (id: string) => void;
   onOpenAnalyzer?: () => void;
+  onOpenSpeak?: () => void;
 }
 
 const statusConfig = {
@@ -119,7 +120,13 @@ const IncidentCard: React.FC<{
   );
 };
 
-const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({ incidents, selectedId, onSelect, onOpenAnalyzer }) => {
+const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
+  incidents,
+  selectedId,
+  onSelect,
+  onOpenAnalyzer,
+  onOpenSpeak,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filtered = incidents.filter(
@@ -165,34 +172,62 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({ incidents, selected
           </div>
         </div>
 
-        {/* Action Button: Detection Engine */}
-        {onOpenAnalyzer && (
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onOpenAnalyzer}
-            style={{
-              width: '100%',
-              marginBottom: '12px',
-              background: 'linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(29,78,216,0.3) 100%)',
-              border: '1px solid #3b82f6',
-              borderRadius: '6px',
-              padding: '8px 10px',
-              color: '#93c5fd',
-              fontSize: '11px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              boxShadow: '0 2px 8px rgba(37,99,235,0.2)',
-            }}
-          >
-            <Sparkles size={13} color="#60a5fa" />
-            Analyze Incident Text
-          </motion.button>
-        )}
+        {/* Action Buttons: Speak Incident & Detection Engine */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
+          {onOpenSpeak && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onOpenSpeak}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(220,38,38,0.3) 100%)',
+                border: '1px solid #ef4444',
+                borderRadius: '6px',
+                padding: '7px 10px',
+                color: '#fca5a5',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(239,68,68,0.25)',
+              }}
+            >
+              <Mic size={13} color="#ef4444" />
+              Speak Incident (Voice)
+            </motion.button>
+          )}
+
+          {onOpenAnalyzer && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onOpenAnalyzer}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(29,78,216,0.3) 100%)',
+                border: '1px solid #3b82f6',
+                borderRadius: '6px',
+                padding: '7px 10px',
+                color: '#93c5fd',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(37,99,235,0.2)',
+              }}
+            >
+              <Sparkles size={13} color="#60a5fa" />
+              Analyze Incident Text
+            </motion.button>
+          )}
+        </div>
 
         {/* Stats row */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>

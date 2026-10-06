@@ -8,7 +8,8 @@ import AttackTimeline from './components/AttackTimeline';
 import EducationPanel from './components/EducationPanel';
 import RecommendedResponsePanel from './components/RecommendedResponsePanel';
 import IncidentAnalyzerModal from './components/IncidentAnalyzerModal';
-import { Menu, X, Layout, Sparkles } from 'lucide-react';
+import SpeakIncidentModal from './components/SpeakIncidentModal';
+import { Menu, X, Layout, Sparkles, Mic } from 'lucide-react';
 import type { Incident } from './types/index';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [analyzerOpen, setAnalyzerOpen] = useState(false);
+  const [speakModalOpen, setSpeakModalOpen] = useState(false);
 
   const selectedIncident =
     incidentList.find((i) => i.id === selectedIncidentId) || incidentList[0];
@@ -61,6 +63,7 @@ function App() {
           selectedId={selectedIncidentId}
           onSelect={handleIncidentSelect}
           onOpenAnalyzer={() => setAnalyzerOpen(true)}
+          onOpenSpeak={() => setSpeakModalOpen(true)}
         />
       </div>
 
@@ -102,6 +105,10 @@ function App() {
                 onOpenAnalyzer={() => {
                   setMobileNavOpen(false);
                   setAnalyzerOpen(true);
+                }}
+                onOpenSpeak={() => {
+                  setMobileNavOpen(false);
+                  setSpeakModalOpen(true);
                 }}
               />
             </motion.div>
@@ -151,7 +158,32 @@ function App() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Speak Incident Button */}
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setSpeakModalOpen(true)}
+              style={{
+                background: 'linear-gradient(135deg, rgba(239,68,68,0.25) 0%, rgba(220,38,38,0.4) 100%)',
+                border: '1px solid #ef4444',
+                borderRadius: '6px',
+                padding: '5px 12px',
+                color: '#fca5a5',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(239,68,68,0.3)',
+              }}
+            >
+              <Mic size={12} color="#ef4444" />
+              Speak Incident
+            </motion.button>
+
+            {/* Detection Engine Analyzer Button */}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -172,7 +204,7 @@ function App() {
               }}
             >
               <Sparkles size={12} color="#60a5fa" />
-              Detection Engine Analyzer
+              Analyze Text
             </motion.button>
           </div>
         </div>
@@ -238,10 +270,17 @@ function App() {
         </AnimatePresence>
       </div>
 
-      {/* Analyzer Modal */}
+      {/* Text Analyzer Modal */}
       <IncidentAnalyzerModal
         isOpen={analyzerOpen}
         onClose={() => setAnalyzerOpen(false)}
+        onLoadIncident={handleLoadGeneratedIncident}
+      />
+
+      {/* Speak Incident Web Speech API Modal */}
+      <SpeakIncidentModal
+        isOpen={speakModalOpen}
+        onClose={() => setSpeakModalOpen(false)}
         onLoadIncident={handleLoadGeneratedIncident}
       />
     </div>
