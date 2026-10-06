@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Incident } from '../data/incidents';
+import type { Incident } from '../types/index';
 import { BookOpen, ExternalLink, ChevronDown, ChevronUp, Lightbulb, Link } from 'lucide-react';
 
 interface EducationPanelProps {

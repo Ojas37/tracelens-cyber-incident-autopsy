@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { AttackStage, TimelineEvent } from '../data/incidents';
+import type { AttackStage, TimelineEvent } from '../types/index';
 import { getStageColor, getStageLabel } from '../utils/helpers';
 
 interface AttackStageVisualizationProps {

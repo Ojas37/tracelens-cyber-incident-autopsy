@@ -1,5 +1,5 @@
 import React from 'react';
-import { Severity, AttackStage } from '../data/incidents';
+import type { Severity, AttackStage } from '../types/index';
 
 export function getSeverityColor(severity: Severity): string {
   switch (severity) {

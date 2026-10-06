@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, AlertTriangle, Clock, User, ChevronRight, Wifi, Search, Activity } from 'lucide-react';
-import { Incident, Severity } from '../data/incidents';
+import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
 
 interface IncidentNavPanelProps {

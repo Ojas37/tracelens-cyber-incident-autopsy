@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Incident } from '../data/incidents';
+import type { Incident } from '../types/index';
 import { AlertTriangle, Clock, TrendingUp, CheckCircle, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 
 interface RecommendedResponsePanelProps {

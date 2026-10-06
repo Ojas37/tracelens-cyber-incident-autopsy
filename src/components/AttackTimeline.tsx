@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TimelineEvent } from '../data/incidents';
+import type { TimelineEvent } from '../types/index';
 import {
   getSeverityColor,
   getSeverityBg,
