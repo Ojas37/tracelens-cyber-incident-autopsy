@@ -2,13 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, SeverityBadge } from '../utils/helpers';
-import { AlertTriangle, TrendingUp, Server, User, Calendar, Activity } from 'lucide-react';
+import { Server, User, Calendar, Activity } from 'lucide-react';
 
 interface SeverityIndicatorProps {
   incident: Incident;
 }
-
-const SEVERITY_ORDER = ['critical', 'high', 'medium', 'low'] as const;
 
 const SeverityMeter: React.FC<{ severity: string }> = ({ severity }) => {
   const levels = [

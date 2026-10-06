@@ -1,5 +1,5 @@
 export type { Severity, AttackStage, TimelineEvent, IncidentResponse, Education, Incident } from '../types/index';
-import type { Severity, AttackStage, TimelineEvent, IncidentResponse, Education, Incident } from '../types/index';
+import type { Incident } from '../types/index';
 
 export const INCIDENTS: Incident[] = [
   {

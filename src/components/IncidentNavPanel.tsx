@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, AlertTriangle, Clock, User, ChevronRight, Wifi, Search, Activity } from 'lucide-react';
+import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles } from 'lucide-react';
 import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
 
@@ -8,6 +8,7 @@ interface IncidentNavPanelProps {
   incidents: Incident[];
   selectedId: string;
   onSelect: (id: string) => void;
+  onOpenAnalyzer?: () => void;
 }
 
 const statusConfig = {
@@ -118,7 +119,7 @@ const IncidentCard: React.FC<{
   );
 };
 
-const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({ incidents, selectedId, onSelect }) => {
+const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({ incidents, selectedId, onSelect, onOpenAnalyzer }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filtered = incidents.filter(
@@ -163,6 +164,35 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({ incidents, selected
             </div>
           </div>
         </div>
+
+        {/* Action Button: Detection Engine */}
+        {onOpenAnalyzer && (
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onOpenAnalyzer}
+            style={{
+              width: '100%',
+              marginBottom: '12px',
+              background: 'linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(29,78,216,0.3) 100%)',
+              border: '1px solid #3b82f6',
+              borderRadius: '6px',
+              padding: '8px 10px',
+              color: '#93c5fd',
+              fontSize: '11px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              boxShadow: '0 2px 8px rgba(37,99,235,0.2)',
+            }}
+          >
+            <Sparkles size={13} color="#60a5fa" />
+            Analyze Incident Text
+          </motion.button>
+        )}
 
         {/* Stats row */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>

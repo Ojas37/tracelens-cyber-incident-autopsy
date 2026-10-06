@@ -9,7 +9,7 @@ import {
   formatTimestamp,
   SeverityBadge,
 } from '../utils/helpers';
-import { Clock, Tag, Database, ExternalLink, ChevronDown, ChevronRight, Shield } from 'lucide-react';
+import { Clock, Tag, Database, ChevronDown, ChevronRight, Shield } from 'lucide-react';
 
 interface AttackTimelineProps {
   events: TimelineEvent[];
