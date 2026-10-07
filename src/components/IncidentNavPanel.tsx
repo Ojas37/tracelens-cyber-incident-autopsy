@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles, Mic } from 'lucide-react';
 import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
+import ScenarioSelector from './ScenarioSelector';
 
 interface IncidentNavPanelProps {
   incidents: Incident[];
@@ -297,6 +298,13 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
 
       {/* Incident list */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 10px' }}>
+        {/* Instant Demo Scenario Quick Switcher */}
+        <ScenarioSelector
+          incidents={incidents}
+          selectedId={selectedId}
+          onSelectScenario={onSelect}
+        />
+
         <div style={{
           fontSize: '9px',
           color: '#3d6a96',

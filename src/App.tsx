@@ -9,6 +9,7 @@ import EducationPanel from './components/EducationPanel';
 import RecommendedResponsePanel from './components/RecommendedResponsePanel';
 import IncidentAnalyzerModal from './components/IncidentAnalyzerModal';
 import SpeakIncidentModal from './components/SpeakIncidentModal';
+import ScenarioSelector from './components/ScenarioSelector';
 import { Menu, X, Layout, Sparkles, Mic } from 'lucide-react';
 import type { Incident } from './types/index';
 
@@ -127,6 +128,7 @@ function App() {
             padding: '8px 16px',
             borderBottom: '1px solid #1a3a5c',
             background: 'rgba(7,22,40,0.98)',
+            gap: '12px',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -156,6 +158,16 @@ function App() {
                 / {selectedIncident.id}
               </span>
             </div>
+          </div>
+
+          {/* Quick Demo Scenario Switcher (Center) */}
+          <div className="hidden md:flex">
+            <ScenarioSelector
+              compact
+              incidents={incidentList}
+              selectedId={selectedIncidentId}
+              onSelectScenario={handleIncidentSelect}
+            />
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
