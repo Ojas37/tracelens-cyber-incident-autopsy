@@ -10,7 +10,8 @@ import RecommendedResponsePanel from './components/RecommendedResponsePanel';
 import IncidentAnalyzerModal from './components/IncidentAnalyzerModal';
 import SpeakIncidentModal from './components/SpeakIncidentModal';
 import ScenarioSelector from './components/ScenarioSelector';
-import { Menu, X, Layout, Sparkles, Mic } from 'lucide-react';
+import InvestigationModeModal from './components/InvestigationModeModal';
+import { Menu, X, Layout, Sparkles, Mic, Trophy } from 'lucide-react';
 import type { Incident } from './types/index';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [analyzerOpen, setAnalyzerOpen] = useState(false);
   const [speakModalOpen, setSpeakModalOpen] = useState(false);
+  const [investigationOpen, setInvestigationOpen] = useState(false);
 
   const selectedIncident =
     incidentList.find((i) => i.id === selectedIncidentId) || incidentList[0];
@@ -65,6 +67,7 @@ function App() {
           onSelect={handleIncidentSelect}
           onOpenAnalyzer={() => setAnalyzerOpen(true)}
           onOpenSpeak={() => setSpeakModalOpen(true)}
+          onOpenInvestigation={() => setInvestigationOpen(true)}
         />
       </div>
 
@@ -110,6 +113,10 @@ function App() {
                 onOpenSpeak={() => {
                   setMobileNavOpen(false);
                   setSpeakModalOpen(true);
+                }}
+                onOpenInvestigation={() => {
+                  setMobileNavOpen(false);
+                  setInvestigationOpen(true);
                 }}
               />
             </motion.div>
@@ -171,6 +178,30 @@ function App() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Investigation Mode Button */}
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setInvestigationOpen(true)}
+              style={{
+                background: 'linear-gradient(135deg, rgba(245,158,11,0.25) 0%, rgba(217,119,6,0.4) 100%)',
+                border: '1px solid #f59e0b',
+                borderRadius: '6px',
+                padding: '5px 12px',
+                color: '#fde68a',
+                fontSize: '11px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(245,158,11,0.25)',
+              }}
+            >
+              <Trophy size={12} color="#f59e0b" />
+              Investigation Mode
+            </motion.button>
+
             {/* Speak Incident Button */}
             <motion.button
               whileHover={{ scale: 1.03 }}
@@ -293,6 +324,13 @@ function App() {
       <SpeakIncidentModal
         isOpen={speakModalOpen}
         onClose={() => setSpeakModalOpen(false)}
+        onLoadIncident={handleLoadGeneratedIncident}
+      />
+
+      {/* Interactive Investigation Mode Modal */}
+      <InvestigationModeModal
+        isOpen={investigationOpen}
+        onClose={() => setInvestigationOpen(false)}
         onLoadIncident={handleLoadGeneratedIncident}
       />
     </div>

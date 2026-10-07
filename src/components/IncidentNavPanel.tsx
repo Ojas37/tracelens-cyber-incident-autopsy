@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles, Mic } from 'lucide-react';
+import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles, Mic, Trophy } from 'lucide-react';
 import type { Incident } from '../types/index';
 import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
 import ScenarioSelector from './ScenarioSelector';
@@ -11,6 +11,7 @@ interface IncidentNavPanelProps {
   onSelect: (id: string) => void;
   onOpenAnalyzer?: () => void;
   onOpenSpeak?: () => void;
+  onOpenInvestigation?: () => void;
 }
 
 const statusConfig = {
@@ -127,6 +128,7 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
   onSelect,
   onOpenAnalyzer,
   onOpenSpeak,
+  onOpenInvestigation,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -173,8 +175,35 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
           </div>
         </div>
 
-        {/* Action Buttons: Speak Incident & Detection Engine */}
+        {/* Action Buttons: Investigation Mode, Speak Incident & Detection Engine */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
+          {onOpenInvestigation && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onOpenInvestigation}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(217,119,6,0.3) 100%)',
+                border: '1px solid #f59e0b',
+                borderRadius: '6px',
+                padding: '7px 10px',
+                color: '#fde68a',
+                fontSize: '11px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(245,158,11,0.25)',
+              }}
+            >
+              <Trophy size={13} color="#f59e0b" />
+              Investigation Mode (Triage)
+            </motion.button>
+          )}
+
           {onOpenSpeak && (
             <motion.button
               whileHover={{ scale: 1.02 }}
