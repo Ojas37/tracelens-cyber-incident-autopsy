@@ -29,37 +29,37 @@ const AnimatedScoreGauge: React.FC<{ score: number; color: string; label: string
   color,
   label,
 }) => {
-  const radius = 28;
+  const radius = 24;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div style={{ position: 'relative', width: '70px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <svg width="70" height="70" style={{ transform: 'rotate(-90deg)' }}>
+    <div style={{ position: 'relative', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="60" height="60" style={{ transform: 'rotate(-90deg)' }}>
         {/* Track background */}
         <circle
-          cx="35"
-          cy="35"
+          cx="30"
+          cy="30"
           r={radius}
-          stroke="#102a45"
-          strokeWidth="5"
+          stroke="#131d2e"
+          strokeWidth="4"
           fill="transparent"
         />
         {/* Animated value arc */}
         <motion.circle
-          cx="35"
-          cy="35"
+          cx="30"
+          cy="30"
           r={radius}
           stroke={color}
-          strokeWidth="5"
+          strokeWidth="4"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           strokeLinecap="round"
           fill="transparent"
           style={{
-            filter: `drop-shadow(0 0 6px ${color}80)`,
+            filter: `drop-shadow(0 0 4px ${color}60)`,
           }}
         />
       </svg>
@@ -76,11 +76,11 @@ const AnimatedScoreGauge: React.FC<{ score: number; color: string; label: string
       >
         <motion.span
           key={score}
-          initial={{ opacity: 0, scale: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.25 }}
           style={{
-            fontSize: '15px',
+            fontSize: '14px',
             fontWeight: 800,
             fontFamily: 'JetBrains Mono, monospace',
             color: '#ffffff',
@@ -93,8 +93,8 @@ const AnimatedScoreGauge: React.FC<{ score: number; color: string; label: string
             fontSize: '7px',
             color,
             fontWeight: 700,
-            letterSpacing: '0.08em',
-            marginTop: '2px',
+            letterSpacing: '0.06em',
+            marginTop: '1px',
           }}
         >
           {label}
@@ -109,32 +109,29 @@ const AnimatedScoreGauge: React.FC<{ score: number; color: string; label: string
  */
 const AnimatedSeverityTiers: React.FC<{ severity: string }> = ({ severity }) => {
   const tiers = [
-    { key: 'low', label: 'LOW', color: '#22c55e', bg: 'rgba(34,197,94,0.15)', active: true },
+    { key: 'low', label: 'LOW', color: '#10b981', active: true },
     {
       key: 'medium',
       label: 'MED',
       color: '#eab308',
-      bg: 'rgba(234,179,8,0.15)',
       active: severity === 'medium' || severity === 'high' || severity === 'critical',
     },
     {
       key: 'high',
       label: 'HIGH',
       color: '#f97316',
-      bg: 'rgba(249,115,22,0.15)',
       active: severity === 'high' || severity === 'critical',
     },
     {
       key: 'critical',
       label: 'CRIT',
       color: '#ef4444',
-      bg: 'rgba(239,68,68,0.15)',
       active: severity === 'critical',
     },
   ];
 
   return (
-    <div style={{ display: 'flex', gap: '5px', alignItems: 'flex-end', height: '38px' }}>
+    <div style={{ display: 'flex', gap: '4px', alignItems: 'flex-end', height: '32px' }}>
       {tiers.map((t, idx) => {
         const isCurrent = t.key === severity;
         return (
@@ -144,51 +141,29 @@ const AnimatedSeverityTiers: React.FC<{ severity: string }> = ({ severity }) => 
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '3px',
+              gap: '2px',
             }}
           >
             <motion.div
               initial={{ height: 0 }}
               animate={{
-                height: t.active ? `${(idx + 1) * 7 + 8}px` : '6px',
-                opacity: t.active ? 1 : 0.25,
+                height: t.active ? `${(idx + 1) * 5 + 6}px` : '4px',
+                opacity: t.active ? 1 : 0.2,
               }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              transition={{ duration: 0.35, delay: idx * 0.05 }}
               style={{
-                width: '14px',
-                background: t.active
-                  ? `linear-gradient(to top, ${t.color}, ${t.color}dd)`
-                  : '#1a3a5c',
-                borderRadius: '3px',
-                boxShadow: isCurrent ? `0 0 12px ${t.color}` : 'none',
-                position: 'relative',
+                width: '10px',
+                background: t.active ? t.color : '#1e293b',
+                borderRadius: '2px',
+                boxShadow: isCurrent ? `0 0 8px ${t.color}` : 'none',
               }}
-            >
-              {isCurrent && (
-                <motion.div
-                  animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  style={{
-                    position: 'absolute',
-                    top: '-2px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '4px',
-                    height: '4px',
-                    borderRadius: '50%',
-                    background: '#ffffff',
-                    boxShadow: `0 0 6px ${t.color}`,
-                  }}
-                />
-              )}
-            </motion.div>
+            />
             <span
               style={{
-                fontSize: '8px',
+                fontSize: '7px',
                 fontWeight: isCurrent ? 700 : 500,
-                color: t.active ? t.color : '#3d6a96',
+                color: t.active ? t.color : '#475569',
                 fontFamily: 'JetBrains Mono, monospace',
-                letterSpacing: '0.04em',
               }}
             >
               {t.label}
@@ -210,9 +185,9 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
   return (
     <div
       style={{
-        background: 'linear-gradient(180deg, rgba(7,22,40,0.98) 0%, rgba(5,17,31,0.95) 100%)',
-        borderBottom: '1px solid #1a3a5c',
-        padding: '12px 20px',
+        background: '#0a0f18',
+        borderBottom: '1px solid #1a2638',
+        padding: '10px 18px',
         position: 'relative',
       }}
     >
@@ -222,102 +197,99 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '20px',
+          gap: '16px',
           flexWrap: 'wrap',
         }}
       >
         {/* Left: Incident Metadata & Title */}
-        <div style={{ flex: 1, minWidth: '280px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+        <div style={{ flex: 1, minWidth: '260px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
             <span
               style={{
-                fontSize: '10px',
+                fontSize: '9px',
                 color: '#60a5fa',
                 fontFamily: 'JetBrains Mono, monospace',
-                letterSpacing: '0.06em',
-                background: 'rgba(59,130,246,0.1)',
+                letterSpacing: '0.04em',
+                background: '#101c2e',
                 padding: '2px 6px',
-                borderRadius: '4px',
-                border: '1px solid rgba(59,130,246,0.25)',
+                borderRadius: '3px',
+                border: '1px solid #1e3a5f',
+                fontWeight: 600,
               }}
             >
               {incident.id}
             </span>
 
-            {/* Animated Pulsing Severity Pill */}
-            <motion.span
-              animate={{ scale: [1, 1.02, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
+            {/* Severity Pill */}
+            <span
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '5px',
-                fontSize: '10px',
+                gap: '4px',
+                fontSize: '9px',
                 fontWeight: 700,
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                padding: '2px 8px',
-                borderRadius: '4px',
+                letterSpacing: '0.06em',
+                padding: '2px 7px',
+                borderRadius: '3px',
                 background: scoreToken.bgColor,
                 color: scoreToken.color,
                 border: `1px solid ${scoreToken.borderColor}`,
-                boxShadow: `0 0 10px ${scoreToken.glowColor}`,
               }}
             >
               <span
                 style={{
-                  width: '6px',
-                  height: '6px',
+                  width: '5px',
+                  height: '5px',
                   borderRadius: '50%',
                   background: scoreToken.color,
-                  boxShadow: `0 0 6px ${scoreToken.color}`,
                 }}
               />
-              {scoreResult.severity} Severity
-            </motion.span>
+              {scoreResult.severity} Threat Level
+            </span>
 
             {/* Killchain Stage Counter */}
             <span
               style={{
                 fontSize: '9px',
                 color: '#38bdf8',
-                background: 'rgba(56,189,248,0.1)',
-                border: '1px solid rgba(56,189,248,0.25)',
+                background: 'rgba(56,189,248,0.08)',
+                border: '1px solid rgba(56,189,248,0.2)',
                 padding: '2px 6px',
-                borderRadius: '4px',
+                borderRadius: '3px',
                 fontFamily: 'JetBrains Mono, monospace',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '3px',
               }}
             >
-              <ShieldAlert size={10} color="#38bdf8" />
+              <ShieldAlert size={9} color="#38bdf8" />
               {scoreResult.stageCount}/{scoreResult.totalPossibleStages} Stages
             </span>
 
             <span
               style={{
                 fontSize: '9px',
-                color: '#7aa3cc',
-                background: 'rgba(122,163,204,0.08)',
-                border: '1px solid rgba(122,163,204,0.2)',
+                color: '#94a3b8',
+                background: '#121a28',
+                border: '1px solid #1e293b',
                 padding: '2px 6px',
-                borderRadius: '4px',
-                letterSpacing: '0.06em',
+                borderRadius: '3px',
+                letterSpacing: '0.04em',
                 fontWeight: 600,
               }}
             >
-              {incident.status.toUpperCase()}
+              STATUS: {incident.status.toUpperCase()}
             </span>
           </div>
 
           <h1
             style={{
-              fontSize: '17px',
+              fontSize: '15px',
               fontWeight: 700,
-              color: '#e2eeff',
-              lineHeight: 1.3,
-              margin: '3px 0 3px 0',
+              color: '#f8fafc',
+              lineHeight: 1.25,
+              margin: '2px 0',
             }}
           >
             {incident.title}
@@ -328,8 +300,8 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
               margin: 0,
               fontSize: '11px',
               color: '#94a3b8',
-              lineHeight: 1.4,
-              maxWidth: '680px',
+              lineHeight: 1.35,
+              maxWidth: '640px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
@@ -344,12 +316,11 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '14px',
-            background: 'rgba(10,31,58,0.7)',
-            border: `1px solid ${scoreToken.borderColor}60`,
-            borderRadius: '10px',
-            padding: '8px 14px',
-            boxShadow: `0 4px 20px -5px ${scoreToken.glowColor}`,
+            gap: '12px',
+            background: '#0d1522',
+            border: `1px solid ${scoreToken.borderColor}50`,
+            borderRadius: '8px',
+            padding: '6px 12px',
           }}
         >
           {/* Animated Gauge */}
@@ -360,7 +331,7 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
           />
 
           {/* Level Bars */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}>
             <AnimatedSeverityTiers severity={scoreResult.severity} />
             <button
               onClick={() => setShowDetails(!showDetails)}
@@ -374,16 +345,16 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '2px',
-                padding: '2px 4px',
+                padding: '1px 3px',
               }}
             >
-              <Info size={10} />
-              {showDetails ? 'Hide Factors' : 'Score Factors'}
+              <Info size={9} />
+              {showDetails ? 'Hide' : 'Factors'}
               <ChevronDown
-                size={10}
+                size={9}
                 style={{
                   transform: showDetails ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s',
+                  transition: 'transform 0.15s',
                 }}
               />
             </button>
@@ -398,35 +369,35 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             style={{
               overflow: 'hidden',
-              marginTop: '10px',
-              paddingTop: '10px',
-              borderTop: '1px solid #1a3a5c',
+              marginTop: '8px',
+              paddingTop: '8px',
+              borderTop: '1px solid #1a2638',
             }}
           >
             <div
               style={{
-                background: '#040d1a',
-                border: '1px solid #1e3a5f',
-                borderRadius: '8px',
-                padding: '10px 14px',
+                background: '#060a12',
+                border: '1px solid #1e293b',
+                borderRadius: '6px',
+                padding: '8px 12px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '8px',
+                gap: '6px',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Flame size={13} color={scoreToken.color} />
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#f1f5f9' }}>
-                    Severity Scoring Formula & Multi-Stage Risk Breakdown
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <Flame size={12} color={scoreToken.color} />
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#f1f5f9' }}>
+                    Severity Scoring Rationale & Killchain Factors
                   </span>
                 </div>
                 <span
                   style={{
-                    fontSize: '10px',
+                    fontSize: '9px',
                     fontFamily: 'JetBrains Mono, monospace',
                     color: '#94a3b8',
                   }}
@@ -435,29 +406,28 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
                 </span>
               </div>
 
-              {/* Summary */}
-              <div style={{ fontSize: '11px', color: '#93c5fd', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '10px', color: '#93c5fd', lineHeight: 1.35 }}>
                 {scoreResult.summary}
               </div>
 
               {/* Detected factors chips */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '2px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                 {scoreResult.criticalFactors.map((factor, i) => (
                   <span
                     key={i}
                     style={{
                       fontSize: '9px',
-                      background: 'rgba(239, 68, 68, 0.12)',
-                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      background: 'rgba(239, 68, 68, 0.08)',
+                      border: '1px solid rgba(239, 68, 68, 0.25)',
                       color: '#fca5a5',
-                      padding: '2px 8px',
-                      borderRadius: '4px',
+                      padding: '2px 6px',
+                      borderRadius: '3px',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
                     }}
                   >
-                    <CheckCircle size={9} color="#ef4444" />
+                    <CheckCircle size={8} color="#ef4444" />
                     {factor}
                   </span>
                 ))}
@@ -467,34 +437,34 @@ const SeverityIndicator: React.FC<SeverityIndicatorProps> = ({ incident }) => {
         )}
       </AnimatePresence>
 
-      {/* Meta row */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginTop: '10px', alignItems: 'center' }}>
+      {/* Compact Meta row */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', marginTop: '6px', alignItems: 'center' }}>
         {[
-          { icon: <User size={11} color="#3d6a96" />, label: 'Analyst', value: incident.analyst },
-          { icon: <Calendar size={11} color="#3d6a96" />, label: 'Date', value: incident.date },
-          { icon: <Activity size={11} color="#3d6a96" />, label: 'Telemetry', value: `${incident.timeline.length} events` },
-          { icon: <Server size={11} color="#3d6a96" />, label: 'Impacted Hosts', value: `${incident.affectedSystems.length} systems` },
+          { icon: <User size={10} color="#64748b" />, label: 'Analyst', value: incident.analyst },
+          { icon: <Calendar size={10} color="#64748b" />, label: 'Date', value: incident.date },
+          { icon: <Activity size={10} color="#64748b" />, label: 'Events', value: `${incident.timeline.length} telemetry records` },
+          { icon: <Server size={10} color="#64748b" />, label: 'Impacted Hosts', value: `${incident.affectedSystems.length} systems` },
         ].map((item) => (
-          <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             {item.icon}
-            <span style={{ fontSize: '10px', color: '#3d6a96' }}>{item.label}:</span>
-            <span style={{ fontSize: '10px', color: '#7aa3cc', fontFamily: 'JetBrains Mono, monospace' }}>
+            <span style={{ fontSize: '9px', color: '#64748b' }}>{item.label}:</span>
+            <span style={{ fontSize: '9px', color: '#cbd5e1', fontFamily: 'JetBrains Mono, monospace' }}>
               {item.value}
             </span>
           </div>
         ))}
 
         {/* Affected systems pills */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginLeft: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap', marginLeft: 'auto' }}>
           {incident.affectedSystems.map((sys) => (
             <span
               key={sys}
               style={{
-                fontSize: '9px',
-                color: '#06b6d4',
-                background: 'rgba(6,182,212,0.08)',
-                border: '1px solid rgba(6,182,212,0.2)',
-                padding: '1px 7px',
+                fontSize: '8px',
+                color: '#38bdf8',
+                background: '#0c1a2d',
+                border: '1px solid #1e3a5f',
+                padding: '1px 5px',
                 borderRadius: '3px',
                 fontFamily: 'JetBrains Mono, monospace',
               }}

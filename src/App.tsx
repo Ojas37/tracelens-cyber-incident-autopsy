@@ -132,9 +132,9 @@ function App() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '8px 16px',
-            borderBottom: '1px solid #1a3a5c',
-            background: 'rgba(7,22,40,0.98)',
+            padding: '7px 16px',
+            borderBottom: '1px solid #1b2638',
+            background: '#0c121d',
             gap: '12px',
           }}
         >
@@ -177,25 +177,24 @@ function App() {
             />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             {/* Investigation Mode Button */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, background: 'rgba(245,158,11,0.15)' }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setInvestigationOpen(true)}
               style={{
-                background: 'linear-gradient(135deg, rgba(245,158,11,0.25) 0%, rgba(217,119,6,0.4) 100%)',
-                border: '1px solid #f59e0b',
+                background: 'rgba(245,158,11,0.08)',
+                border: '1px solid rgba(245,158,11,0.4)',
                 borderRadius: '6px',
                 padding: '5px 12px',
-                color: '#fde68a',
+                color: '#fbbf24',
                 fontSize: '11px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                boxShadow: '0 2px 8px rgba(245,158,11,0.25)',
+                gap: '5px',
               }}
             >
               <Trophy size={12} color="#f59e0b" />
@@ -204,12 +203,12 @@ function App() {
 
             {/* Speak Incident Button */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, background: 'rgba(239,68,68,0.15)' }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setSpeakModalOpen(true)}
               style={{
-                background: 'linear-gradient(135deg, rgba(239,68,68,0.25) 0%, rgba(220,38,38,0.4) 100%)',
-                border: '1px solid #ef4444',
+                background: 'rgba(239,68,68,0.08)',
+                border: '1px solid rgba(239,68,68,0.4)',
                 borderRadius: '6px',
                 padding: '5px 12px',
                 color: '#fca5a5',
@@ -218,8 +217,7 @@ function App() {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                boxShadow: '0 2px 8px rgba(239,68,68,0.3)',
+                gap: '5px',
               }}
             >
               <Mic size={12} color="#ef4444" />
@@ -228,25 +226,24 @@ function App() {
 
             {/* Detection Engine Analyzer Button */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, background: 'rgba(56,189,248,0.15)' }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setAnalyzerOpen(true)}
               style={{
-                background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(29,78,216,0.4) 100%)',
-                border: '1px solid #3b82f6',
+                background: 'rgba(56,189,248,0.08)',
+                border: '1px solid rgba(56,189,248,0.4)',
                 borderRadius: '6px',
                 padding: '5px 12px',
-                color: '#93c5fd',
+                color: '#38bdf8',
                 fontSize: '11px',
                 fontWeight: 600,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                boxShadow: '0 2px 8px rgba(37,99,235,0.25)',
+                gap: '5px',
               }}
             >
-              <Sparkles size={12} color="#60a5fa" />
+              <Sparkles size={12} color="#38bdf8" />
               Analyze Text
             </motion.button>
           </div>
@@ -298,11 +295,11 @@ function App() {
                   maxWidth: '360px',
                   flexShrink: 0,
                   overflowY: 'auto',
-                  padding: '12px',
+                  padding: '10px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0',
-                  background: 'rgba(4,13,26,0.5)',
+                  gap: '10px',
+                  background: '#090f1a',
                 }}
               >
                 <EducationPanel incident={selectedIncident} />

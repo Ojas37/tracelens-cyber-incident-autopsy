@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Clock, User, ChevronRight, Wifi, Search, Activity, Sparkles, Mic, Trophy } from 'lucide-react';
 import type { Incident } from '../types/index';
-import { getSeverityColor, getSeverityBg, formatDate, SeverityBadge } from '../utils/helpers';
+import { getSeverityColor, formatDate, SeverityBadge } from '../utils/helpers';
 import ScenarioSelector from './ScenarioSelector';
 
 interface IncidentNavPanelProps {
@@ -27,26 +27,25 @@ const IncidentCard: React.FC<{
   onClick: () => void;
 }> = ({ incident, isSelected, onClick }) => {
   const sColor = getSeverityColor(incident.severity);
-  const sBg = getSeverityBg(incident.severity);
   const status = statusConfig[incident.status];
 
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ x: 3 }}
+      whileHover={{ x: 2 }}
       whileTap={{ scale: 0.99 }}
       style={{
         cursor: 'pointer',
-        padding: '12px 14px',
-        borderRadius: '8px',
+        padding: '10px 12px',
+        borderRadius: '6px',
         marginBottom: '6px',
-        border: `1px solid ${isSelected ? sColor + '60' : '#1a3a5c'}`,
+        border: `1px solid ${isSelected ? sColor : '#1b2638'}`,
         background: isSelected
-          ? `linear-gradient(135deg, ${sBg}, rgba(10,31,58,0.9))`
-          : 'rgba(10, 31, 58, 0.4)',
+          ? 'rgba(255, 255, 255, 0.03)'
+          : '#111a29',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'border-color 0.2s',
+        transition: 'all 0.15s ease',
       }}
     >
       {isSelected && (
@@ -56,52 +55,54 @@ const IncidentCard: React.FC<{
             position: 'absolute',
             left: 0, top: 0, bottom: 0,
             width: '3px',
-            background: `linear-gradient(to bottom, ${sColor}, ${sColor}60)`,
-            borderRadius: '4px 0 0 4px',
+            background: sColor,
+            borderRadius: '2px 0 0 2px',
           }}
         />
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
         <span style={{
           fontSize: '9px',
-          color: '#3d6a96',
+          color: '#64748b',
           fontFamily: 'JetBrains Mono, monospace',
           letterSpacing: '0.05em',
+          fontWeight: 600,
         }}>
           {incident.id}
         </span>
         <SeverityBadge severity={incident.severity} size="sm" />
       </div>
 
-      <div style={{ fontSize: '12px', fontWeight: 600, color: '#e2eeff', marginBottom: '4px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '11px', fontWeight: 600, color: '#f8fafc', marginBottom: '6px', lineHeight: 1.35 }}>
         {incident.title}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <Clock size={10} color="#3d6a96" />
-          <span style={{ fontSize: '10px', color: '#3d6a96', fontFamily: 'JetBrains Mono, monospace' }}>
+          <Clock size={10} color="#64748b" />
+          <span style={{ fontSize: '9px', color: '#64748b', fontFamily: 'JetBrains Mono, monospace' }}>
             {formatDate(incident.date)}
           </span>
         </div>
         <span style={{
-          fontSize: '9px',
+          fontSize: '8px',
           color: status.color,
           background: `${status.color}15`,
           border: `1px solid ${status.color}30`,
-          padding: '1px 6px',
+          padding: '1px 5px',
           borderRadius: '3px',
-          fontWeight: 600,
+          fontWeight: 700,
           letterSpacing: '0.06em',
+          fontFamily: 'JetBrains Mono, monospace',
         }}>
           {status.label}
         </span>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px' }}>
-        <User size={9} color="#3d6a96" />
-        <span style={{ fontSize: '10px', color: '#3d6a96' }}>{incident.analyst}</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
+        <User size={9} color="#64748b" />
+        <span style={{ fontSize: '9px', color: '#64748b' }}>{incident.analyst}</span>
       </div>
 
       {isSelected && (
@@ -110,12 +111,12 @@ const IncidentCard: React.FC<{
           animate={{ opacity: 1 }}
           style={{
             position: 'absolute',
-            right: '10px',
+            right: '8px',
             top: '50%',
             transform: 'translateY(-50%)',
           }}
         >
-          <ChevronRight size={14} color={sColor} />
+          <ChevronRight size={13} color={sColor} />
         </motion.div>
       )}
     </motion.div>
@@ -149,34 +150,34 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        background: 'rgba(7, 22, 40, 0.95)',
-        borderRight: '1px solid #1a3a5c',
+        background: '#0c121d',
+        borderRight: '1px solid #1b2638',
       }}
     >
       {/* Header */}
-      <div style={{ padding: '16px 16px 12px', borderBottom: '1px solid #1a3a5c' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+      <div style={{ padding: '14px 14px 12px', borderBottom: '1px solid #1b2638' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <div style={{
-            width: '32px', height: '32px',
-            background: 'linear-gradient(135deg, #1e4d7b, #0a1f3a)',
-            borderRadius: '8px',
+            width: '30px', height: '30px',
+            background: 'rgba(56, 189, 248, 0.1)',
+            borderRadius: '6px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #1e4d7b',
+            border: '1px solid rgba(56, 189, 248, 0.25)',
           }}>
-            <Shield size={16} color="#3b82f6" />
+            <Shield size={16} color="#38bdf8" />
           </div>
           <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#e2eeff', letterSpacing: '0.02em' }}>
+            <div style={{ fontSize: '13px', fontWeight: 700, color: '#f8fafc', letterSpacing: '0.02em' }}>
               TraceLens
             </div>
-            <div style={{ fontSize: '9px', color: '#3d6a96', letterSpacing: '0.1em', fontFamily: 'JetBrains Mono, monospace' }}>
+            <div style={{ fontSize: '9px', color: '#64748b', letterSpacing: '0.08em', fontFamily: 'JetBrains Mono, monospace' }}>
               SOC INCIDENT PLATFORM
             </div>
           </div>
         </div>
 
         {/* Action Buttons: Investigation Mode, Speak Incident & Detection Engine */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '12px' }}>
           {onOpenInvestigation && (
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -184,11 +185,11 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
               onClick={onOpenInvestigation}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(217,119,6,0.3) 100%)',
-                border: '1px solid #f59e0b',
+                background: 'rgba(245, 158, 11, 0.1)',
+                border: '1px solid rgba(245, 158, 11, 0.4)',
                 borderRadius: '6px',
-                padding: '7px 10px',
-                color: '#fde68a',
+                padding: '6px 10px',
+                color: '#fbbf24',
                 fontSize: '11px',
                 fontWeight: 700,
                 cursor: 'pointer',
@@ -196,7 +197,6 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
-                boxShadow: '0 2px 8px rgba(245,158,11,0.25)',
               }}
             >
               <Trophy size={13} color="#f59e0b" />
@@ -211,10 +211,10 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
               onClick={onOpenSpeak}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(220,38,38,0.3) 100%)',
-                border: '1px solid #ef4444',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.4)',
                 borderRadius: '6px',
-                padding: '7px 10px',
+                padding: '6px 10px',
                 color: '#fca5a5',
                 fontSize: '11px',
                 fontWeight: 600,
@@ -223,7 +223,6 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
-                boxShadow: '0 2px 8px rgba(239,68,68,0.25)',
               }}
             >
               <Mic size={13} color="#ef4444" />
@@ -238,11 +237,11 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
               onClick={onOpenAnalyzer}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(29,78,216,0.3) 100%)',
-                border: '1px solid #3b82f6',
+                background: 'rgba(56, 189, 248, 0.1)',
+                border: '1px solid rgba(56, 189, 248, 0.4)',
                 borderRadius: '6px',
-                padding: '7px 10px',
-                color: '#93c5fd',
+                padding: '6px 10px',
+                color: '#38bdf8',
                 fontSize: '11px',
                 fontWeight: 600,
                 cursor: 'pointer',
@@ -250,61 +249,60 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
-                boxShadow: '0 2px 8px rgba(37,99,235,0.2)',
               }}
             >
-              <Sparkles size={13} color="#60a5fa" />
+              <Sparkles size={13} color="#38bdf8" />
               Analyze Incident Text
             </motion.button>
           )}
         </div>
 
         {/* Stats row */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', gap: '6px', marginBottom: '10px' }}>
           <div style={{
             flex: 1,
-            background: 'rgba(239,68,68,0.08)',
+            background: 'rgba(239,68,68,0.06)',
             border: '1px solid rgba(239,68,68,0.2)',
-            borderRadius: '6px',
-            padding: '6px 8px',
+            borderRadius: '5px',
+            padding: '5px 6px',
             textAlign: 'center',
           }}>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#ef4444', fontFamily: 'JetBrains Mono, monospace' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: '#ef4444', fontFamily: 'JetBrains Mono, monospace' }}>
               {criticalCount}
             </div>
-            <div style={{ fontSize: '9px', color: '#ef4444', opacity: 0.7, letterSpacing: '0.08em' }}>CRITICAL</div>
+            <div style={{ fontSize: '8px', color: '#ef4444', opacity: 0.8, letterSpacing: '0.08em', fontWeight: 600 }}>CRITICAL</div>
           </div>
           <div style={{
             flex: 1,
-            background: 'rgba(249,115,22,0.08)',
+            background: 'rgba(249,115,22,0.06)',
             border: '1px solid rgba(249,115,22,0.2)',
-            borderRadius: '6px',
-            padding: '6px 8px',
+            borderRadius: '5px',
+            padding: '5px 6px',
             textAlign: 'center',
           }}>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#f97316', fontFamily: 'JetBrains Mono, monospace' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: '#f97316', fontFamily: 'JetBrains Mono, monospace' }}>
               {openCount}
             </div>
-            <div style={{ fontSize: '9px', color: '#f97316', opacity: 0.7, letterSpacing: '0.08em' }}>ACTIVE</div>
+            <div style={{ fontSize: '8px', color: '#f97316', opacity: 0.8, letterSpacing: '0.08em', fontWeight: 600 }}>ACTIVE</div>
           </div>
           <div style={{
             flex: 1,
-            background: 'rgba(59,130,246,0.08)',
-            border: '1px solid rgba(59,130,246,0.2)',
-            borderRadius: '6px',
-            padding: '6px 8px',
+            background: 'rgba(56,189,248,0.06)',
+            border: '1px solid rgba(56,189,248,0.2)',
+            borderRadius: '5px',
+            padding: '5px 6px',
             textAlign: 'center',
           }}>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#3b82f6', fontFamily: 'JetBrains Mono, monospace' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: '#38bdf8', fontFamily: 'JetBrains Mono, monospace' }}>
               {incidents.length}
             </div>
-            <div style={{ fontSize: '9px', color: '#3b82f6', opacity: 0.7, letterSpacing: '0.08em' }}>TOTAL</div>
+            <div style={{ fontSize: '8px', color: '#38bdf8', opacity: 0.8, letterSpacing: '0.08em', fontWeight: 600 }}>TOTAL</div>
           </div>
         </div>
 
         {/* Search */}
         <div style={{ position: 'relative' }}>
-          <Search size={12} color="#3d6a96" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
+          <Search size={12} color="#64748b" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
             placeholder="Search incidents..."
@@ -312,11 +310,11 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               width: '100%',
-              background: 'rgba(10,31,58,0.6)',
-              border: '1px solid #1a3a5c',
-              borderRadius: '6px',
-              padding: '7px 10px 7px 28px',
-              color: '#e2eeff',
+              background: '#111a29',
+              border: '1px solid #1b2638',
+              borderRadius: '5px',
+              padding: '6px 10px 6px 28px',
+              color: '#f8fafc',
               fontSize: '11px',
               outline: 'none',
               fontFamily: 'Inter, sans-serif',
@@ -326,7 +324,7 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
       </div>
 
       {/* Incident list */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 10px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px' }}>
         {/* Instant Demo Scenario Quick Switcher */}
         <ScenarioSelector
           incidents={incidents}
@@ -336,14 +334,16 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
 
         <div style={{
           fontSize: '9px',
-          color: '#3d6a96',
+          color: '#64748b',
           letterSpacing: '0.1em',
           marginBottom: '8px',
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
+          fontWeight: 700,
+          fontFamily: 'JetBrains Mono, monospace',
         }}>
-          <Activity size={9} color="#3d6a96" />
+          <Activity size={10} color="#64748b" />
           INCIDENTS ({filtered.length})
         </div>
         <AnimatePresence>
@@ -366,17 +366,18 @@ const IncidentNavPanel: React.FC<IncidentNavPanelProps> = ({
 
       {/* Footer */}
       <div style={{
-        padding: '10px 14px',
-        borderTop: '1px solid #1a3a5c',
+        padding: '8px 14px',
+        borderTop: '1px solid #1b2638',
         display: 'flex',
         alignItems: 'center',
         gap: '6px',
+        background: 'rgba(17, 26, 41, 0.3)',
       }}>
         <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', animation: 'pulse-glow 2s infinite' }} />
-        <span style={{ fontSize: '9px', color: '#3d6a96', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.08em' }}>
-          ANALYST ONLINE
+        <span style={{ fontSize: '9px', color: '#64748b', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.08em', fontWeight: 600 }}>
+          ANALYST ACTIVE
         </span>
-        <Wifi size={9} color="#22c55e" style={{ marginLeft: 'auto' }} />
+        <Wifi size={10} color="#22c55e" style={{ marginLeft: 'auto' }} />
       </div>
     </div>
   );
