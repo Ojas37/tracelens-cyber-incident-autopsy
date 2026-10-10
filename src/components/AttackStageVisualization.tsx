@@ -7,7 +7,7 @@ import { ShieldAlert } from 'lucide-react';
 interface AttackStageVisualizationProps {
   events: TimelineEvent[];
   selectedEventId: string | null;
-  onSelectEvent: (id: string) => void;
+  onSelectEvent: (id: string | null) => void;
 }
 
 const STAGES: AttackStage[] = [

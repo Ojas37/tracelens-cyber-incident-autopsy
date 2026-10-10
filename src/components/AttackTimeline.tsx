@@ -24,7 +24,7 @@ import {
 interface AttackTimelineProps {
   events: TimelineEvent[];
   selectedEventId: string | null;
-  onSelectEvent: (id: string) => void;
+  onSelectEvent: (id: string | null) => void;
 }
 
 const containerVariants: Variants = {
@@ -490,7 +490,7 @@ const AttackTimeline: React.FC<AttackTimelineProps> = ({
             index={index}
             isSelected={selectedEventId === event.id}
             isLast={index === chronologicalEvents.length - 1}
-            onClick={() => onSelectEvent(event.id === selectedEventId ? '' : event.id)}
+            onClick={() => onSelectEvent(event.id === selectedEventId ? null : event.id)}
           />
         ))}
       </motion.div>
